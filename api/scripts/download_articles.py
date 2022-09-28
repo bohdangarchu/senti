@@ -52,9 +52,9 @@ def get_text(article):
 
 
 @transaction.atomic
-def main():
+def run(start_date='2019-1-1', end_date='2022-9-1'):
     counter = 0
-    for date in pd.date_range(start='2011-1-1', end='2020-11-1', freq='M'):
+    for date in pd.date_range(start=start_date, end=end_date, freq='M'):
         counter += 1
         articles = fetch_articles(date.year, date.month)
         print(f'articles downloaded: {len(articles)}')

@@ -5,8 +5,10 @@ class ApiConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
     name = 'api'
 
-    # startup script
+    # uncomment to run the startup script
+    # after running comment it out
     # def ready(self):
+    #     run_download_script()
 
 
 def get_sentiment_sql():
@@ -27,11 +29,12 @@ def run_download_script():
     import time
     print(f'articles in the db: {len(Article.objects.all())}')
     start = time.time()
-    download_articles.main()
+    download_articles.run()
     end = time.time()
     print(f'startup script finished, total instances in the db: {len(Article.objects.all())}')
     total_time = end - start
     print('execution time: ' + str(total_time/60) + ' minutes')
+    exit()
 
 
 
