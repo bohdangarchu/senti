@@ -19,7 +19,9 @@
    pip install -r requirements.txt
    python manage.py migrate
    ```
-8. go to api/apps.py
-9. uncomment two lines to run the startup script
-10. run the server: ```python manage.py runserver```
-11. run ```npm run dev``` in a new terminal window
+7. go to api/apps.py
+8. uncomment two lines to run the db script on startup
+9. run the server: ```python manage.py runserver```
+10. when the script is finished, comment the lines in api/apps.py
+11. run ```python manage.py runserver```
+12. run ```npm run dev``` in a new terminal window
