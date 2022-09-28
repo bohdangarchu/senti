@@ -1,4 +1,4 @@
-#Setup
+# Setup
 
 1. clone the project
 2. create an account for NYT archive [api](https://developer.nytimes.com/docs/archive-product/1/overview)
