@@ -29,8 +29,11 @@
    npm install --save --legacy-peer-deps
    npm run dev
    ```
-9. go to api/apps.py
-10. uncomment two lines to run the db script on startup
-11. run the server: ```python manage.py runserver```
-12. when the script is finished, comment the lines in api/apps.py
-13. run ```python manage.py runserver```
+9. run startup script 
+   ```
+   python manage.py runscript download_articles
+   ```
+10. run the server
+   ```
+   python manage.py runserver
+   ```

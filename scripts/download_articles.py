@@ -7,9 +7,22 @@ from api.models import Article
 from datetime import datetime
 from django.db import transaction
 from decouple import config
+import time
 
 KEY_NYT = config('KEY_NYT')
 sia = SentimentIntensityAnalyzer()
+
+
+# is called when running the script
+def run():
+    print(f'articles in the db: {len(Article.objects.all())}')
+    start = time.time()
+    download()
+    end = time.time()
+    print(f'startup script finished, total instances in the db: {len(Article.objects.all())}')
+    total_time = end - start
+    print('execution time: ' + str(total_time / 60) + ' minutes')
+    exit()
 
 
 # returns a list of all articles for given month and year
@@ -52,10 +65,9 @@ def get_text(article):
 
 
 @transaction.atomic
-def run(start_date='2019-1-1', end_date='2022-9-1'):
-    counter = 0
+def download(start_date='2019-1-1', end_date='2022-9-1'):
+    print('downloading articles...')
     for date in pd.date_range(start=start_date, end=end_date, freq='M'):
-        counter += 1
         articles = fetch_articles(date.year, date.month)
         print(f'articles downloaded: {len(articles)}')
         for article in articles:
@@ -64,4 +76,5 @@ def run(start_date='2019-1-1', end_date='2022-9-1'):
                             date=article['date'],
                             sentiment=article['sentiment'])
             entry.save()
-    print(f'number of month: {counter}')
+
+
