@@ -14,7 +14,7 @@
    ```
 6. run the following commands (on Windows): 
    ```
-   python3 -m venv venv
+   python -m venv venv
    venv\Scripts\activate.bat
    pip install -r requirements.txt
    python manage.py migrate
@@ -26,8 +26,7 @@
    ```
 8. go to frontend/ and run:
    ```
-   npm install --save --legacy-peer-deps @material-ui/core
-   npm install
+   npm install --save --legacy-peer-deps
    npm run dev
    ```
 9. go to api/apps.py
