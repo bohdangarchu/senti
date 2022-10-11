@@ -19,9 +19,19 @@
    pip install -r requirements.txt
    python manage.py migrate
    ```
-7. go to api/apps.py
-8. uncomment two lines to run the db script on startup
-9. run the server: ```python manage.py runserver```
-10. when the script is finished, comment the lines in api/apps.py
-11. run ```python manage.py runserver```
-12. run ```npm run dev``` in a new terminal window
+7. open python terminal and run:
+   ```
+   >>> import nltk
+   >>> nltk.download('all')
+   ```
+8. go to frontend/ and run:
+   ```
+   npm install --save --legacy-peer-deps @material-ui/core
+   npm install
+   npm run dev
+   ```
+9. go to api/apps.py
+10. uncomment two lines to run the db script on startup
+11. run the server: ```python manage.py runserver```
+12. when the script is finished, comment the lines in api/apps.py
+13. run ```python manage.py runserver```
