@@ -1,7 +1,10 @@
 .env
 venv
+.venv
 frontend/node_modules/
 frontend/static/frontend/
 .idea/
 db.sqlite3
+__pycache__/
+
 
