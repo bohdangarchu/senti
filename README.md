@@ -10,7 +10,7 @@
 5. add the following lines and paste your key: 
    ```
    KEY_NYT='{your key}'
-   DJANGO_SECRET_KEY = '{our django key}'
+   DJANGO_SECRET_KEY='{our django key}'
    ```
 6. run the following commands (on Windows): 
    ```
