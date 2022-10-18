@@ -24,7 +24,7 @@ export default function RangeDatePicker(props) {
   return (
     <Grid
       my={10}
-      containers
+      container
       spacing={0.5}
       direction="row"
       justifyContent="center"
