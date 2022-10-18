@@ -29,7 +29,7 @@
    npm install --save --legacy-peer-deps
    npm run dev
    ```
-9. run startup script 
+9. run the script to download articles 
    ```
    python manage.py runscript download_articles
    ```
