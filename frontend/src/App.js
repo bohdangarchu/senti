@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Grid, Container, Typography, Button } from "@mui/material/";
 import RangeDatePicker from "./components/RangeDatePicker";
 import LineChart from "./components/LineChart";
-import "../src/App.css";
+import "./App.css";
 
 export default function App() {
   const [fetchData, setFetchData] = useState([]);
@@ -43,6 +43,7 @@ export default function App() {
 
   return (
     <Container maxWidth="md" sx={{ bgcolor: "white", minHeight: "100vh" }}>
+      <div id="test_div">huiii</div>
       <Grid container>
         <Grid item xs={12}>
           <RangeDatePicker onRangeSelect={handleGenerateClick} />
