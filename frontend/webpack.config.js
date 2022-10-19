@@ -5,7 +5,7 @@ module.exports = {
   entry: "./src/index.js",
   output: {
     path: path.resolve(__dirname, "./static/frontend"),
-    filename: "sentiapp.js",
+    filename: "bundle.js",
   },
   module: {
     rules: [
