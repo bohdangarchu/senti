@@ -34,17 +34,8 @@ def get_sentiment(keyword, start_date=None, end_date=None):
 def prepare_query(keyword, start_date, end_date):
     keyword = f"%{keyword.upper()}%"
     params = [keyword]
-    date_stmt = ''
-    if start_date and end_date:
-        date_stmt = f"and a.date between %s and %s"
-        params.append(start_date)
-        params.append(end_date)
-    elif start_date:
-        date_stmt = f"and a.date >= %s"
-        params.append(start_date)
-    elif end_date:
-        date_stmt = f"and a.date <= %s"
-        params.append(end_date)
+    date_stmt, date_params = prepare_date_stmt(start_date, end_date)
+    params.extend(date_params)
     # %% is used for single %
     # single quotes are set automatically around parameters
     query = f"""select strftime('%%Y', a.date), strftime('%%m', a.date), avg(a.sentiment) 
@@ -60,6 +51,22 @@ def transform_qs(queryset):
         lambda row: DatePoint(date=date(int(row[0]), int(row[1]), 1), sentiment=row[2]),
         queryset
     ))
+
+
+def prepare_date_stmt(start_date, end_date):
+    date_stmt = ''
+    params = []
+    if start_date and end_date:
+        date_stmt = "and a.date between %s and %s"
+        params.append(start_date)
+        params.append(end_date)
+    elif start_date:
+        date_stmt = "and a.date >= %s"
+        params.append(start_date)
+    elif end_date:
+        date_stmt = "and a.date <= %s"
+        params.append(end_date)
+    return date_stmt, params
 
 
 # def get_sentiment(keyword, start_date=None, end_date=None):
