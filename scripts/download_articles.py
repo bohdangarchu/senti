@@ -65,7 +65,7 @@ def get_text(article):
 
 
 @transaction.atomic
-def download(start_date='2019-1-1', end_date=str(datetime.now().date())):
+def download(start_date='2010-1-1', end_date='2019-1-1'):
     print('downloading articles...')
     for date in pd.period_range(start_date, end_date, freq='M'):
         articles = fetch_articles(date.year, date.month)
