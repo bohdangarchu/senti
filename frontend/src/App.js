@@ -10,7 +10,6 @@ export default function App() {
   const [fetchData, setFetchData] = useState([]);
   const [sentiData, setSentiData] = useState({});
   const { get, post, loading } = useFetch(`/api?keyword=`);
-  console.log(loading);
 
   function handleGenerateClick(fromDate, toDate, word) {
     setFetchData([fromDate, toDate, word]);
@@ -21,22 +20,12 @@ export default function App() {
       get(
         `${fetchData[2]}&start-date=${fetchData[0]}&end-date=${fetchData[1]}`
       ).then((json) => {
-        console.log(json);
         setSentiData({
           labels: json.map((uniqYear) => uniqYear.date),
           datasets: [
             {
               label: "sentiment to the word according to New York Times",
               data: json.map((uniqYear) => uniqYear.sentiment),
-              backgroundColor: [
-                "rgba(75,192,192,1)",
-                "#ecf0f1",
-                "#50AF95",
-                "#f3ba2f",
-                "#2a71d0",
-              ],
-              borderColor: "black",
-              borderWidth: 2,
             },
           ],
         });
