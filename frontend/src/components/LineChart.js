@@ -19,14 +19,15 @@ const options = {
   borderWidth: 2,
   tension: 0.2,
   normalized: true,
-  // plugins: {
-  //   decimation: decimation,
-  // },
-  // scales: {
-  //   x: {
-  //     type: "time",
-  //   },
-  // },
+  plugins: {
+    //dont work for now
+    decimation: decimation,
+  },
+  scales: {
+    x: {
+      type: "time",
+    },
+  },
 };
 
 function LineChart({ chartData }) {
