@@ -7,6 +7,7 @@ import {
   getElementAtEvent,
   getElementsAtEvent,
 } from "react-chartjs-2";
+// import { reforwardRef } from "react-chartjs-2/dist/utils";
 
 // const decimation = {
 //   enabled: false,
@@ -36,7 +37,7 @@ const options = {
   },
 };
 
-function LineChart(props) {
+export function LineChart(props) {
   const chartRef = useRef();
   const onClick = (event) => {
     console.log(getDatasetAtEvent(chartRef.current, event));
@@ -52,7 +53,20 @@ function LineChart(props) {
   );
 }
 
-export default LineChart;
+export const FaturedLineChart = React.forwardRef((props, ref) => {
+  const onClick = (event) => {
+    console.log(getDatasetAtEvent(ref.current, event));
+  };
+
+  return (
+    <Line
+      data={props.chartData}
+      options={options}
+      onClick={onClick}
+      ref={ref}
+    />
+  );
+});
 
 // я думаю нужно переформатировать под time cartesian для того, чтобы информация по Х-оси была в дате, а не в значении
 

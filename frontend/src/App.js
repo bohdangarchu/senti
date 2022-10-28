@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Grid, Container, Typography, Box } from "@mui/material/";
 import RangeDatePicker from "./components/RangeDatePicker";
-import LineChart from "./components/LineChart";
+import { LineChart, FaturedLineChart } from "./components/LineChart";
 import CircularProgress from "@mui/material/CircularProgress";
 import "../src/App.css";
 import useFetch from "./hooks/useFetch";
@@ -11,14 +11,14 @@ export default function App() {
   const [fetchData, setFetchData] = useState([]);
   const [sentiData, setSentiData] = useState({});
   const { get, post, loading } = useFetch(`/api?keyword=`);
-  // const chartRef = useRef();
+  const ref = React.createRef();
 
   function handleGenerateClick(fromDate, toDate, word) {
     setFetchData([fromDate, toDate, word]);
   }
 
   function handlePointDate(event) {
-    console.log(getDatasetAtEvent(chartRef.current, event));
+    console.log(getDatasetAtEvent(ref.current, event));
   }
 
   useEffect(() => {
@@ -52,7 +52,12 @@ export default function App() {
               Choose dates and word you are looking for!
             </Typography>
           ) : (
-            <LineChart chartData={sentiData} onClick={handlePointDate} />
+            // <LineChart chartData={sentiData} onClick={handlePointDate} />
+            <FaturedLineChart
+              chartData={sentiData}
+              onClick={handlePointDate}
+              ref={ref}
+            />
           )}
           <Box
             sx={{ display: "flex" }}
