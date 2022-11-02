@@ -47,6 +47,14 @@ export default function App() {
     }
   }, [fetchData]);
 
+  useEffect(() => {
+    get(
+      `${fetchData[2]}&start-date=${fetchData[0]}&end-date=${fetchData[1]}`
+    ).then((json) => {
+      console.log(json);
+    });
+  }, [detailsOnDate]);
+
   return (
     <Container maxWidth="md" sx={{ bgcolor: "white", minHeight: "100vh" }}>
       <Grid container>
