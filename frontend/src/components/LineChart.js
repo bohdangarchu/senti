@@ -62,7 +62,7 @@ export const FaturedLineChart = React.forwardRef((props, ref) => {
     <Line
       data={props.chartData}
       options={options}
-      onClick={onClick}
+      onClick={handlePointClick}
       ref={ref}
     />
   );

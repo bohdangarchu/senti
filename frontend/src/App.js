@@ -17,9 +17,9 @@ export default function App() {
     setFetchData([fromDate, toDate, word]);
   }
 
-  function handlePointDate(event) {
-    console.log(getDatasetAtEvent(ref.current, event));
-  }
+  // function handlePointDate(event) {
+  //   console.log(getDatasetAtEvent(ref.current, event));
+  // }
 
   useEffect(() => {
     if (typeof fetchData[0] == "string") {
@@ -55,7 +55,7 @@ export default function App() {
             // <LineChart chartData={sentiData} onClick={handlePointDate} />
             <FaturedLineChart
               chartData={sentiData}
-              onClick={handlePointDate}
+              // onClick={handlePointDate}
               ref={ref}
             />
           )}
