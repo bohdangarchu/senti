@@ -1,25 +1,33 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Grid, Container, Typography, Box } from "@mui/material/";
 import RangeDatePicker from "./components/RangeDatePicker";
-import { LineChart, FaturedLineChart } from "./components/LineChart";
 import CircularProgress from "@mui/material/CircularProgress";
 import "../src/App.css";
 import useFetch from "./hooks/useFetch";
-import { getDatasetAtEvent } from "react-chartjs-2";
+import { Line, getElementAtEvent } from "react-chartjs-2";
+import Chart from "chart.js/auto";
+import { options } from "./components/options";
 
 export default function App() {
   const [fetchData, setFetchData] = useState([]);
   const [sentiData, setSentiData] = useState({});
-  const { get, post, loading } = useFetch(`/api?keyword=`);
-  const ref = React.createRef();
+  const [detailsOnDate, setDetailsOnDate] = useState([]);
+  const { get, loading } = useFetch(`/api?keyword=`);
+  const chartRef = useRef();
 
   function handleGenerateClick(fromDate, toDate, word) {
     setFetchData([fromDate, toDate, word]);
   }
 
-  // function handlePointDate(event) {
-  //   console.log(getDatasetAtEvent(ref.current, event));
-  // }
+  const handlePointDate = (event) => {
+    const point = getElementAtEvent(chartRef.current, event);
+    const pointIndex = point[0].index;
+    const pointDate = sentiData.labels[pointIndex];
+    const sentiWord = fetchData[2];
+    setDetailsOnDate([pointDate, sentiWord]);
+  };
+
+  console.log(detailsOnDate);
 
   useEffect(() => {
     if (typeof fetchData[0] == "string") {
@@ -53,10 +61,11 @@ export default function App() {
             </Typography>
           ) : (
             // <LineChart chartData={sentiData} onClick={handlePointDate} />
-            <FaturedLineChart
-              chartData={sentiData}
-              // onClick={handlePointDate}
-              ref={ref}
+            <Line
+              ref={chartRef}
+              data={sentiData}
+              onClick={handlePointDate}
+              options={options}
             />
           )}
           <Box
