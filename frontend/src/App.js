@@ -39,7 +39,7 @@ export default function App() {
           labels: json.map((uniqYear) => uniqYear.date),
           datasets: [
             {
-              label: "sentiment to the word according to New York Times",
+              label: "click on the point to see details",
               data: json.map((uniqYear) => uniqYear.sentiment),
             },
           ],
