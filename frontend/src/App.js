@@ -42,7 +42,10 @@ export default function App() {
           datasets: [
             {
               label: "click on the point to see details",
-              data: json.map((uniqYear) => uniqYear.sentiment),
+              data: json.map((uniqYear) => {
+                let undroundedSenti = uniqYear.sentiment;
+                return undroundedSenti.toFixed(3);
+              }),
             },
           ],
         });
