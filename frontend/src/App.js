@@ -31,6 +31,8 @@ export default function App() {
   };
 
   useEffect(() => {
+    setSentiDataDetails({});
+    setSentiData({});
     if (typeof fetchData[0] == "string") {
       get(
         `?keyword=${fetchData[2]}&start-date=${fetchData[0]}&end-date=${fetchData[1]}`
