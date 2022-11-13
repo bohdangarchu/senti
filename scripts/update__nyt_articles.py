@@ -1,5 +1,5 @@
 from django.db import transaction
-from .download_articles import fetch_articles
+from .download_nyt_articles import fetch_articles
 from api.models import Article
 from django.db.models import Max
 from datetime import datetime

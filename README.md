@@ -31,7 +31,7 @@
    ```
 9. run the script to download articles 
    ```
-   python manage.py runscript download_articles
+   python manage.py runscript download_nyt_articles
    ```
 10. run the server
    ```
