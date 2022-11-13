@@ -1,6 +1,6 @@
 from django.db import transaction
 from .download_nyt_articles import fetch_articles
-from api.models import Article
+from api.models import NytArticle
 from django.db.models import Max
 from datetime import datetime
 import pandas as pd
@@ -11,7 +11,7 @@ def run():
     start = time.time()
     download_new_articles()
     end = time.time()
-    print(f'startup script finished, total instances in the db: {len(Article.objects.all())}')
+    print(f'startup script finished, total instances in the db: {len(NytArticle.objects.all())}')
     total_time = end - start
     print('execution time: ' + str(total_time / 60) + ' minutes')
     exit()
@@ -23,10 +23,10 @@ def save_articles(articles):
     start_date = get_last_date_in_db()
     for article in articles:
         if article.get('date') > start_date:
-            entry = Article(text=article['text'],
-                            url=article['url'],
-                            date=article['date'],
-                            sentiment=article['sentiment'])
+            entry = NytArticle(text=article['text'],
+                               url=article['url'],
+                               date=article['date'],
+                               sentiment=article['sentiment'])
             entry.save()
 
 
@@ -40,7 +40,7 @@ def download_new_articles():
 
 
 def get_last_date_in_db():
-    return Article.objects.aggregate(Max('date')).get('date__max')
+    return NytArticle.objects.aggregate(Max('date')).get('date__max')
 
 
 

@@ -3,7 +3,7 @@ import pandas as pd
 import nltk
 from nltk.sentiment import SentimentIntensityAnalyzer
 from statistics import mean
-from api.models import Article
+from api.models import NytArticle
 from datetime import datetime
 from django.db import transaction
 from decouple import config
@@ -15,11 +15,11 @@ sia = SentimentIntensityAnalyzer()
 
 # is called when running the script
 def run():
-    print(f'articles in the db: {len(Article.objects.all())}')
+    print(f'articles in the db: {len(NytArticle.objects.all())}')
     start = time.time()
     download()
     end = time.time()
-    print(f'startup script finished, total instances in the db: {len(Article.objects.all())}')
+    print(f'startup script finished, total instances in the db: {len(NytArticle.objects.all())}')
     total_time = end - start
     print('execution time: ' + str(total_time / 60) + ' minutes')
     exit()
@@ -71,10 +71,10 @@ def download(start_date='2010-1-1', end_date='2019-1-1'):
         articles = fetch_articles(date.year, date.month)
         print(f'articles downloaded: {len(articles)}')
         for article in articles:
-            entry = Article(text=article['text'],
-                            url=article['url'],
-                            date=article['date'],
-                            sentiment=article['sentiment'])
+            entry = NytArticle(text=article['text'],
+                               url=article['url'],
+                               date=article['date'],
+                               sentiment=article['sentiment'])
             entry.save()
 
 

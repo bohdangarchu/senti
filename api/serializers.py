@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import DatePoint, Article
+from .models import DatePoint, NytArticle
 
 
 class DatePointSerializer(serializers.ModelSerializer):
@@ -10,5 +10,5 @@ class DatePointSerializer(serializers.ModelSerializer):
 
 class ArticleSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Article
+        model = NytArticle
         fields = ['text', 'sentiment', 'date', 'url']

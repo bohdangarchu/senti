@@ -3,7 +3,7 @@ from django.db import models
 # Create your models here.
 
 
-class Article(models.Model):
+class NytArticle(models.Model):
     text = models.CharField(max_length=2000)
     url = models.URLField()
     sentiment = models.FloatField()

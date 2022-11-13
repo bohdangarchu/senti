@@ -1,5 +1,5 @@
 from django.db import connection
-from ..models import Article
+from ..models import NytArticle
 
 
 def most_negative_articles(year, month, keyword='', results=5):
@@ -30,7 +30,7 @@ def prepare_query(keyword, year, month, limit):
 # list of (year, mo, sentiment) triples
 def transform_qs(queryset):
     return list(map(
-        lambda row: Article(text=row[0], date=row[1], sentiment=row[2], url=row[3]),
+        lambda row: NytArticle(text=row[0], date=row[1], sentiment=row[2], url=row[3]),
         queryset
     ))
 

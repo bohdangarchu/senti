@@ -1,6 +1,6 @@
 from datetime import date
 from django.db import connection
-from ..models import DatePoint, Article
+from ..models import DatePoint, NytArticle
 
 
 def get_sentiment_list(keyword, start_date=None, end_date=None):
