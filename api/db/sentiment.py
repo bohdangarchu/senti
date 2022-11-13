@@ -25,7 +25,7 @@ def prepare_query(keyword, start_date, end_date):
     # %% is used for single %
     # single quotes are set automatically around parameters
     query = f"""select strftime('%%Y', a.date), strftime('%%m', a.date), round(avg(a.sentiment), 2)
-                    from api_article a
+                    from nyt_article a
                     where UPPER(a.text) LIKE %s {date_stmt}
                     group by strftime('%%Y', a.date), strftime('%%m', a.date)"""
     return query, params

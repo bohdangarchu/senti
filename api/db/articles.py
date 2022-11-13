@@ -18,7 +18,7 @@ def prepare_query(keyword, year, month, limit):
     params = [year, month, keyword, limit]
     query = """
     select a.text, a.date, round(a.sentiment, 2), a.url
-    from api_article as a 
+    from nyt_article as a 
     where strftime('%%Y', a.date) = %s
     and strftime('%%m', a.date) = %s 
     and UPPER(a.text) LIKE %s

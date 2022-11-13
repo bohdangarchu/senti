@@ -9,16 +9,11 @@ class Article(models.Model):
     sentiment = models.FloatField()
     date = models.DateField()
 
+    class Meta:
+        db_table = 'nyt_article'
+
     def __str__(self):
         return f'text: {self.text} date: {str(self.date)} url: {self.url} sentiment: {self.sentiment}'
-
-
-    # def __init__(self, text, url, sentiment, date, *args, **kwargs):
-    #     super().__init__(*args, **kwargs)
-    #     self.text = text
-    #     self.url = url
-    #     self.sentiment = sentiment
-    #     self.date = date
 
 
 class DatePoint(models.Model):
