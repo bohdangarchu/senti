@@ -11,11 +11,11 @@ URL_ALL = 'https://api.tickertick.com/feed?n=1000'
 
 def run():
     start = time.time()
-    download_all()
+    tickers = []
+    download_articles_for_tickers(tickers)
     end = time.time()
     print(f'startup script finished, total instances in the db: {len(FinancialArticle.objects.all())}')
-    total_time = end - start
-    print('execution time: ' + str(total_time / 60) + ' minutes')
+    print('execution time: ' + str((end - start) / 60) + ' minutes')
     print('finished')
     exit()
 
@@ -28,14 +28,14 @@ def save_articles(articles: [dict]):
 
 
 @transaction.atomic
-def download_all():
+def download_all(base_url=URL_ALL):
     print('downloading stock news...')
     last_id = None
     while True:
         if last_id:
-            articles = fetch_older_articles(last_id)
+            articles = fetch_older_articles(last_id, base_url)
         else:
-            articles = fetch_articles(URL_ALL)
+            articles = fetch_articles(base_url)
         if len(articles) == 0:
             break
         save_articles(articles)
@@ -43,15 +43,26 @@ def download_all():
         time.sleep(2)
 
 
+def download_articles_for_tickers(tickers: [str]):
+    for ticker in tickers:
+        url = f'{URL_ALL}&q=tt:{ticker}'
+        print(f'downloading articles for ticker {ticker}...')
+        download_all(base_url=url)
+
+
 def fetch_articles(url):
-    response = requests.get(url)
-    data = response.json()
-    return list(data['stories'])
+    try:
+        response = requests.get(url)
+        data = response.json()
+        return list(data['stories'])
+    except Exception as e:
+        print(f'exception for response {response}')
+        raise e
 
 
-def fetch_older_articles(article_id: str):
+def fetch_older_articles(article_id: str, base_url: str):
     """fetch articles older than article_id"""
-    url = f'{URL_ALL}&last={article_id}'
+    url = f'{base_url}&last={article_id}'
     return fetch_articles(url)
 
 
