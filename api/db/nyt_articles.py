@@ -2,7 +2,9 @@ from django.db import connection
 from ..models import NytArticle
 
 
-def most_negative_articles(year: int, month: int, keyword: str = '', results: int = 5):
+def most_negative_articles(year: int, month: int, keyword: str, results: int):
+    if keyword is None:
+        keyword = ''
     query, params = prepare_query(keyword, year, month, results)
     with connection.cursor() as cursor:
         cursor.execute(query, params)
