@@ -7,6 +7,7 @@ from django.db import transaction
 from api.models import FinancialArticle
 
 URL_ALL = 'https://api.tickertick.com/feed?n=1000'
+# todo save tickers to a json file
 
 
 def run():
@@ -21,7 +22,7 @@ def run():
 
 
 @transaction.atomic
-def save_articles(articles: [dict]):
+def save_articles(articles: list[dict]):
     for article in articles:
         entry = FinancialArticle.create(article)
         entry.save()
@@ -43,7 +44,7 @@ def download_all(base_url=URL_ALL):
         time.sleep(2)
 
 
-def download_articles_for_tickers(tickers: [str]):
+def download_articles_for_tickers(tickers: list[str]):
     for ticker in tickers:
         url = f'{URL_ALL}&q=tt:{ticker}'
         print(f'downloading articles for ticker {ticker}...')
@@ -66,7 +67,7 @@ def fetch_older_articles(article_id: str, base_url: str):
     return fetch_articles(url)
 
 
-def fetch_last_x_articles(x, last_id=None):
+def fetch_last_x_articles(x: int, last_id=None):
     if x < 1000:
         return fetch_articles(URL_ALL)
     articles = []
