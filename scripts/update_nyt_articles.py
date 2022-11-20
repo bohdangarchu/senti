@@ -12,8 +12,7 @@ def run():
     download_new_articles()
     end = time.time()
     print(f'startup script finished, total instances in the db: {len(NytArticle.objects.all())}')
-    total_time = end - start
-    print('execution time: ' + str(total_time / 60) + ' minutes')
+    print('execution time: ' + str(round((end - start) / 60)) + ' minutes')
     exit()
 
 

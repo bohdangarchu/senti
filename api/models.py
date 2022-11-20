@@ -1,6 +1,10 @@
 from django.db import models
 import json
 from datetime import datetime, timezone
+from utils.sentiment_util import SentimentAnalyzer
+
+
+sa = SentimentAnalyzer()
 
 
 class NytArticle(models.Model):
@@ -38,6 +42,7 @@ class FinancialArticle(models.Model):
     date = models.DateTimeField()
     tickers = models.TextField(max_length=100, null=True)
     description = models.TextField(null=True)
+    sentiment = models.FloatField(default=0)
 
     class Meta:
         db_table = 'financial_article'
@@ -45,9 +50,15 @@ class FinancialArticle(models.Model):
     def __str__(self):
         return json.dumps(self)
 
+    def calculate_sentiment(self):
+        if self.description is not None and len(self.description) > 0:
+            self.sentiment = sa.analyze(self.description)
+        else:
+            self.sentiment = sa.analyze(self.title)
+
     @classmethod
     def create(cls, json_data: dict):
-        return cls(
+        article = cls(
             _id=json_data.get('id'),
             title=json_data.get('title'),
             url=json_data.get('url'),
@@ -56,5 +67,8 @@ class FinancialArticle(models.Model):
             tickers=format_tickers(json_data.get('tickers')),
             description=json_data.get('description')
         )
+        article.calculate_sentiment()
+        return article
+
 
 
