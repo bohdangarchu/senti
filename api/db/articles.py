@@ -17,7 +17,7 @@ def prepare_query(keyword, year, month, limit):
     month = month_to_str(month)
     params = [year, month, keyword, limit]
     query = """
-    select a.text, a.date, a.sentiment, a.url
+    select a.text, a.date, round(a.sentiment, 2), a.url
     from api_article as a 
     where strftime('%%Y', a.date) = %s
     and strftime('%%m', a.date) = %s 
