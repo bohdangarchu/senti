@@ -1,9 +1,10 @@
 from django.urls import path
-from .views import DatePointView, MostNegativeArticles
+from .views import NYTNewsSentiment, MostNegativeArticles, FinancialNewsSentiment
 # additional urls.py file to define urls for this api
 
+# /api
 urlpatterns = [
-    path('', DatePointView.as_view()),
-    path('/most-negative-articles/<int:year>/<int:month>',
-         MostNegativeArticles.as_view())
+    path('', NYTNewsSentiment.as_view()),
+    path('/most-negative-articles/<int:year>/<int:month>', MostNegativeArticles.as_view()),
+    path('/financial-news-sentiment/stocks/<str:ticker>', FinancialNewsSentiment.as_view())
 ]
