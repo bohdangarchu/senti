@@ -1,15 +1,11 @@
 import requests
-from datetime import datetime
 import time
 import json
 import os
 from typing import Optional
-
-from django.db import transaction
 from api.models import FinancialArticle
 
 URL_ALL = 'https://api.tickertick.com/feed?n=1000'
-# todo save tickers to a json file
 
 
 def run():
