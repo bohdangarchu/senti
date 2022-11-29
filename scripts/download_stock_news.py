@@ -6,12 +6,13 @@ from typing import Optional
 from api.models import FinancialArticle
 
 URL_ALL = 'https://api.tickertick.com/feed?n=1000'
+too_many_requests_counter = 0
 
 
 def run():
     start = time.time()
     # tickers = load_tickers()
-    tickers = ['nio']
+    tickers = ["adbe"]
     download_articles(tickers)
     end = time.time()
     print(f'startup script finished, total instances in the db: {len(FinancialArticle.objects.all())}')
@@ -20,6 +21,7 @@ def run():
 
 
 def download_all(base_url=URL_ALL):
+    global too_many_requests_counter
     print(f'downloading stock news from {base_url}...')
     last_id = None
     while True:
@@ -27,13 +29,12 @@ def download_all(base_url=URL_ALL):
             articles = fetch_older_articles(last_id, base_url)
         else:
             articles = fetch_articles(base_url)
-        if articles is None:
-            time.sleep(2)
-            continue
-        elif len(articles) == 0:
+        if len(articles) == 0:
             print(f'all articles downloaded. lastId={last_id}')
             time.sleep(2)
             break
+        if too_many_requests_counter > 3:
+            exit()
         save_articles(articles)
         last_id = articles[-1]['id']
         time.sleep(2)
@@ -47,17 +48,22 @@ def download_articles(tickers: list[str]):
 
 
 def fetch_articles(url: str) -> Optional[list[dict]]:
+    global too_many_requests_counter
     response = None
     try:
         response = requests.get(url)
         data = response.json()
         return list(data['stories'])
     except Exception as e:
-        if response:
-            print(f'exception for response {response.text}: {e}')
+        if response is None:
+            print(f'no response. error: {e}')
+        elif response.status_code == 429:
+            too_many_requests_counter += 1
+            print('too many requests. sleeping for 60s')
+            time.sleep(60)
         else:
-            print(e)
-        return None
+            print(f'response: {response.reason}. error: {e}')
+        return []
 
 
 def fetch_older_articles(last_id: str, base_url: str) -> list[dict]:
