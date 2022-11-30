@@ -94,7 +94,7 @@ export default function App() {
         </Grid>
         <Grid item xs={12}>
           <Box sx={{ display: "flex", flexDirection: "column" }} mt={2}>
-            {sentiDataDetails.length > 0 ? (
+            {sentiDataDetails.length > 0 && loading == false ? (
               <Box>
                 <Typography variant="h5" align="left" gutterBottom>
                   These are the most negative articles affected the sentiment
