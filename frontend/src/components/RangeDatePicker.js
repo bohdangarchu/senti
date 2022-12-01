@@ -56,7 +56,7 @@ export default function RangeDatePicker(props) {
           size="large"
           onClick={() => props.onRangeSelect(fromDate, toDate, sentiWord)}
         >
-          Generate
+          Search
         </Button>
       </Grid>
     </Grid>

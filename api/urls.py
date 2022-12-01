@@ -4,7 +4,7 @@ from .views import NYTNewsSentiment, MostNegativeArticles, FinancialNewsSentimen
 
 # /api
 urlpatterns = [
-    path('', NYTNewsSentiment.as_view()),
-    path('/most-negative-articles/<int:year>/<int:month>', MostNegativeArticles.as_view()),
-    path('/financial-news-sentiment/stocks/<str:ticker>', FinancialNewsSentiment.as_view())
+    path('nyt-news-sentiment', NYTNewsSentiment.as_view()),
+    path('most-negative-articles/<int:year>/<int:month>', MostNegativeArticles.as_view()),
+    path('financial-news-sentiment/stocks/<str:ticker>', FinancialNewsSentiment.as_view())
 ]

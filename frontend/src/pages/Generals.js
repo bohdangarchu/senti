@@ -51,7 +51,7 @@ export default function Generals() {
     setSentiData({});
     if (typeof fetchData[0] == "string") {
       get(
-        `?keyword=${fetchData[2]}&start-date=${fetchData[0]}&end-date=${fetchData[1]}`
+        `/nyt-news-sentiment?keyword=${fetchData[2]}&start-date=${fetchData[0]}&end-date=${fetchData[1]}`
       ).then((json) => {
         setSentiData({
           labels: json.map((uniqYear) => uniqYear.date),
@@ -112,7 +112,7 @@ export default function Generals() {
           {sentiDataDetails.length > 0 && loading == false ? (
             <Box>
               <Typography variant="h5" align="left" gutterBottom>
-                These are the most negative articles affected the sentiment
+                Articles that have the most negative sentiment
               </Typography>
               {sentiDataDetails.map((article) => (
                 <Article
