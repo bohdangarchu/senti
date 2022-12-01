@@ -12,8 +12,8 @@ export default function App() {
       <Header />
       <Container maxWidth="md">
         <Routes>
-          <Route path="/" element={<General />} />
-          <Route path="/financial" element={<Financials />} />
+          <Route path="/nyt-news" element={<General />} />
+          <Route path="/financial-news" element={<Financials />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </Container>
