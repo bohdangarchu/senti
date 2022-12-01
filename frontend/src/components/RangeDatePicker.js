@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Box, TextField, Grid, Button } from "@mui/material/";
+import { TextField, Grid, Button } from "@mui/material/";
 import { useState } from "react";
 import FromDatePicker from "./FromDatePicker";
 import ToDatePicker from "./ToDatePicker";
@@ -22,14 +22,7 @@ export default function RangeDatePicker(props) {
   }
 
   return (
-    <Grid
-      my={10}
-      container
-      spacing={0.5}
-      direction="row"
-      justifyContent="center"
-      alignItems="center"
-    >
+    <Grid my={10} container spacing={0.5} alignItems="center">
       <Grid item xs={6} lg={4}>
         <TextField
           fullWidth
@@ -48,9 +41,19 @@ export default function RangeDatePicker(props) {
       <Grid item xs={3} lg={3}>
         <ToDatePicker onDateSelect={handleDateSelect} />
       </Grid>
-      <Grid item xs={6} lg={2}>
+      <Grid
+        item
+        xs={6}
+        lg={2}
+        sx={{
+          display: "flex",
+          flexDirection: "row",
+          justifyContent: "center",
+        }}
+      >
         <Button
           variant="contained"
+          size="large"
           onClick={() => props.onRangeSelect(fromDate, toDate, sentiWord)}
         >
           Generate

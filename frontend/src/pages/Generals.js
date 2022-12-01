@@ -6,6 +6,24 @@ import RangeDatePicker from "../components/RangeDatePicker";
 import useFetch from "../hooks/useFetch";
 import { Line, getElementAtEvent } from "react-chartjs-2";
 import { options } from "../components/options";
+import {
+  Chart,
+  LineController,
+  LineElement,
+  PointElement,
+  LinearScale,
+  Title,
+  CategoryScale,
+} from "chart.js";
+
+Chart.register(
+  LineController,
+  LineElement,
+  PointElement,
+  LinearScale,
+  Title,
+  CategoryScale
+);
 
 export default function Generals() {
   const [fetchData, setFetchData] = useState([]);
