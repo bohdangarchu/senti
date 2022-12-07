@@ -31,10 +31,10 @@ function Header() {
   const headerNavigation = (page) => {
     switch (page) {
       case "General Senti":
-        navigate("/");
+        navigate("/nyt-news");
         break;
       case "Financial Senti":
-        navigate("/financial");
+        navigate("/financial-news");
         break;
     }
   };
