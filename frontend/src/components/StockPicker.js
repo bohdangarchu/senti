@@ -1,15 +1,23 @@
 import React, { useState } from "react";
 import { Grid, TextField, Button } from "@mui/material/";
-function StockPicker() {
+function StockPicker(props) {
   const [companyName, setCompanyName] = useState("");
   console.log(companyName);
   return (
-    <Grid my={10} container spacing={0.5} direction="row" alignItems="center">
+    <Grid
+      my={5}
+      container
+      sx={{
+        display: "flex",
+        flexDirection: "row",
+        justifyContent: "center",
+      }}
+    >
       <Grid item xs={8} lg={8}>
         <TextField
           fullWidth
           id="outlined-basic"
-          label="Outlined"
+          label="Company name"
           variant="outlined"
           value={companyName}
           onChange={(e) => {
@@ -30,7 +38,7 @@ function StockPicker() {
         <Button
           variant="contained"
           size="large"
-          onClick={() => console.log(companyName)}
+          onClick={() => props.onTickerChange(companyName)}
         >
           Find
         </Button>
