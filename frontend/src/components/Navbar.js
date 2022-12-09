@@ -12,11 +12,10 @@ import MenuItem from "@mui/material/MenuItem";
 import BusinessIcon from "@mui/icons-material/Business";
 import { useNavigate } from "react-router-dom";
 
-const pages = ["General Senti", "Financial Senti"];
+const pages = ["Home", "General Senti", "Financial Senti"];
 
-function Header() {
+function Navbar() {
   const [anchorElNav, setAnchorElNav] = useState(null);
-  const [anchorElUser, setAnchorElUser] = useState(null);
   const navigate = useNavigate();
 
   const handleOpenNavMenu = (event) => {
@@ -30,6 +29,9 @@ function Header() {
 
   const headerNavigation = (page) => {
     switch (page) {
+      case "Home":
+        navigate("/");
+        break;
       case "General Senti":
         navigate("/nyt-news");
         break;
@@ -39,13 +41,9 @@ function Header() {
     }
   };
 
-  //   const handleCloseUserMenu = () => {
-  //     setAnchorElUser(null);
-  //   };
-
   return (
     <AppBar position="static">
-      <Container maxWidth="xl">
+      <Container maxWidth="lg">
         <Toolbar disableGutters>
           <BusinessIcon sx={{ display: { xs: "none", md: "flex" }, mr: 1 }} />
           <Typography
@@ -137,4 +135,4 @@ function Header() {
     </AppBar>
   );
 }
-export default Header;
+export default Navbar;

@@ -15,9 +15,10 @@ function StockPicker(props) {
       container
       spacing={0.5}
       alignItems="center"
-      direction={{ xs: "column", md: "row" }}
+      justifyContent="center"
+      sx={{ border: 1 }}
     >
-      <Grid item xs={12} lg={6}>
+      <Grid item xs={12} sm={6} sx={{ border: 1 }}>
         <TextField
           fullWidth
           id="outlined-basic"
@@ -29,17 +30,18 @@ function StockPicker(props) {
           }}
         />
       </Grid>
-      <Grid item xs={12} lg={3}>
+      <Grid item xs={12} sm={3}>
         <Dropdown onPeriodChange={handlePeriodChange} period={period} />
       </Grid>
       <Grid
         item
         xs={6}
-        lg={2}
+        sm={2}
         sx={{
           display: "flex",
           flexDirection: "row",
           justifyContent: "center",
+          border: 1,
         }}
       >
         <Button

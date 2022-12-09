@@ -23,7 +23,7 @@ export default function RangeDatePicker(props) {
 
   return (
     <Grid my={10} container spacing={0.5} alignItems="center">
-      <Grid item xs={6} lg={4}>
+      <Grid item xs={12} sm={4}>
         <TextField
           fullWidth
           id="outlined-basic"
@@ -35,16 +35,16 @@ export default function RangeDatePicker(props) {
           }}
         />
       </Grid>
-      <Grid item xs={3} lg={3}>
+      <Grid item xs={6} sm={3}>
         <FromDatePicker onDateSelect={handleDateSelect} />
       </Grid>
-      <Grid item xs={3} lg={3}>
+      <Grid item xs={6} sm={3}>
         <ToDatePicker onDateSelect={handleDateSelect} />
       </Grid>
       <Grid
         item
-        xs={6}
-        lg={2}
+        xs={12}
+        sm={2}
         sx={{
           display: "flex",
           flexDirection: "row",
