@@ -6,5 +6,6 @@ from .views import index
 urlpatterns = [
     path('financial-news/', index),
     path('nyt-news/', index),
+    path('/', index),
     path('', index)
 ]

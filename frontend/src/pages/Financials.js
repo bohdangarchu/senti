@@ -1,46 +1,45 @@
 import React, { useState, useEffect } from "react";
 import { Grid, Typography, Box } from "@mui/material/";
 import StockPicker from "../components/StockPicker";
-import MultilineChart from "../components/MultilineChart";
-import useFetch from "../hooks/useFetch";
+import MultiLineChart from "../components/Charts/MultiLineChart";
+import { fakeData } from "../auxiliary components/fakeData";
 
 function Financials() {
-  const [ticker, setTicker] = useState("");
-  const { get, loading } = useFetch("/api");
-  const [stockData, setStockData] = useState();
-  function handleTickerChange(tckr) {
-    setTicker(tckr);
+  const [fetchData, setFetchData] = useState([]);
+  const [initialRender, setInitialRender] = useState(true);
+  function getStockTicker(companyName) {
+    return companyName;
+    //here i`ll extract stockTicker from company name
+    //probably use external api to get stock ticker
+  }
+  function handleSearchClick(companyName, period) {
+    const stockTicker = getStockTicker(companyName);
+    setFetchData([stockTicker, period]);
   }
 
   useEffect(() => {
-    Promise.all([
-      fetch(
-        "nyt-news-sentiment?keyword=nvidia&start-date=01-01-2021&end-date=01-12-2021"
-      ),
-      fetch("financial-news-sentiment/stocks/nvda"),
-    ])
-      .then(([newsSenti, stockSenti]) =>
-        Promise.all([newsSenti.json(), stockSenti.json()])
-      )
-      .then(([newsSenti, stockSenti]) => console.log(newsSenti, stockSenti));
-  }, [ticker]);
+    if (initialRender) {
+      setInitialRender(false);
+    } else {
+      console.log(fetchData);
+    }
+  }, [fetchData]);
+
   return (
     <Grid container>
       <Grid item xs={12} mt={5}>
         <Typography variant="h4" align="center" gutterBottom>
-          Choose dates and word you are looking for
+          Type compony name and select period!!!!
         </Typography>
         <Box
           sx={{ display: "flex" }}
           direction="row"
           justifyContent="center"
           alignItems="center"
-        >
-          {/* {loading && <CircularProgress size={100} />} */}
-        </Box>
+        ></Box>
       </Grid>
       <Grid item xs={12}>
-        <StockPicker onTickerChange={handleTickerChange} />
+        <StockPicker onSearchClick={handleSearchClick} />
       </Grid>
       <Grid item xs={12}>
         <Box
@@ -49,7 +48,7 @@ function Financials() {
           justifyContent="center"
           alignItems="center"
         >
-          <MultilineChart />
+          <MultiLineChart data={fakeData} />
         </Box>
       </Grid>
     </Grid>

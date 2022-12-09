@@ -1,0 +1,6 @@
+fix test fetch url
+refactor simple line chart to separate component
+fix prevent initial render (to fetch and useEffect) inside Generals
+fix button display on md screens generals
+add landing page
+check difference between single line chart and multi line chart. in case they ==, get rid of several chart

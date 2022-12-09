@@ -4,32 +4,15 @@ import Article from "../components/Article";
 import CircularProgress from "@mui/material/CircularProgress";
 import RangeDatePicker from "../components/RangeDatePicker";
 import useFetch from "../hooks/useFetch";
-import { Line, getElementAtEvent } from "react-chartjs-2";
-import { options } from "../components/options";
-import {
-  Chart,
-  LineController,
-  LineElement,
-  PointElement,
-  LinearScale,
-  Title,
-  CategoryScale,
-} from "chart.js";
-
-Chart.register(
-  LineController,
-  LineElement,
-  PointElement,
-  LinearScale,
-  Title,
-  CategoryScale
-);
+import { getElementAtEvent } from "react-chartjs-2";
+import { SingleLineChart } from "../components/Charts/SingleLineChart";
 
 export default function Generals() {
   const [fetchData, setFetchData] = useState([]);
   const [sentiData, setSentiData] = useState({});
   const [detailsOnDate, setDetailsOnDate] = useState([]);
   const [sentiDataDetails, setSentiDataDetails] = useState([]);
+  const [initialRender, setInitialRender] = useState(true);
   const { get, loading } = useFetch(`/api`);
   const chartRef = useRef();
 
@@ -49,7 +32,9 @@ export default function Generals() {
   useEffect(() => {
     setSentiDataDetails({});
     setSentiData({});
-    if (typeof fetchData[0] == "string") {
+    if (initialRender) {
+      setInitialRender(false);
+    } else {
       get(
         `/nyt-news-sentiment?keyword=${fetchData[2]}&start-date=${fetchData[0]}&end-date=${fetchData[1]}`
       ).then((json) => {
@@ -76,8 +61,6 @@ export default function Generals() {
     }
   }, [detailsOnDate]);
 
-  console.log(sentiDataDetails, sentiDataDetails.length);
-
   return (
     <Grid container>
       <Grid item xs={12}>
@@ -90,11 +73,10 @@ export default function Generals() {
             Choose dates and word you are looking for!
           </Typography>
         ) : (
-          <Line
-            ref={chartRef}
+          <SingleLineChart
             data={sentiData}
-            onClick={handlePointDate}
-            options={options}
+            onPointClick={handlePointDate}
+            ref={chartRef}
           />
         )}
         <Box

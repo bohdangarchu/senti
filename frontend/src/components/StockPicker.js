@@ -1,19 +1,23 @@
 import React, { useState } from "react";
 import { Grid, TextField, Button } from "@mui/material/";
+import Dropdown from "./Dropdown";
 function StockPicker(props) {
   const [companyName, setCompanyName] = useState("");
-  console.log(companyName);
+  const [period, setPeriod] = useState("");
+
+  function handlePeriodChange(time_range) {
+    setPeriod(time_range);
+  }
+
   return (
     <Grid
-      my={5}
+      my={10}
       container
-      sx={{
-        display: "flex",
-        flexDirection: "row",
-        justifyContent: "center",
-      }}
+      spacing={0.5}
+      alignItems="center"
+      direction={{ xs: "column", md: "row" }}
     >
-      <Grid item xs={8} lg={8}>
+      <Grid item xs={12} lg={6}>
         <TextField
           fullWidth
           id="outlined-basic"
@@ -25,22 +29,27 @@ function StockPicker(props) {
           }}
         />
       </Grid>
+      <Grid item xs={12} lg={3}>
+        <Dropdown onPeriodChange={handlePeriodChange} period={period} />
+      </Grid>
       <Grid
         item
-        xs={4}
-        lg={1}
+        xs={6}
+        lg={2}
         sx={{
           display: "flex",
           flexDirection: "row",
-          justifyContent: "start",
+          justifyContent: "center",
         }}
       >
         <Button
           variant="contained"
           size="large"
-          onClick={() => props.onTickerChange(companyName)}
+          onClick={() => {
+            props.onSearchClick(companyName, period);
+          }}
         >
-          Find
+          Search!
         </Button>
       </Grid>
     </Grid>
