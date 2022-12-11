@@ -42,7 +42,7 @@ function Navbar() {
   };
 
   return (
-    <AppBar position="static">
+    <AppBar position="static" sx={{ flexGrow: 0 }}>
       <Container maxWidth="lg">
         <Toolbar disableGutters>
           <BusinessIcon sx={{ display: { xs: "none", md: "flex" }, mr: 1 }} />

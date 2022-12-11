@@ -9,7 +9,6 @@ export default function NotFound() {
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
-        minHeight: "100vh",
       }}
     >
       <Container maxWidth="md">
