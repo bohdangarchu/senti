@@ -7,15 +7,12 @@ import { fakeData } from "../auxiliary components/fakeData";
 function Financials() {
   const [fetchData, setFetchData] = useState([]);
   const [initialRender, setInitialRender] = useState(true);
-  function getStockTicker(companyName) {
-    return companyName;
-    //here i`ll extract stockTicker from company name
-    //probably use external api to get stock ticker
-  }
-  function handleSearchClick(companyName, period) {
-    const stockTicker = getStockTicker(companyName);
+
+  function handleSearchClick(stockTicker, period) {
     setFetchData([stockTicker, period]);
   }
+
+  console.log(fetchData);
 
   useEffect(() => {
     if (initialRender) {
