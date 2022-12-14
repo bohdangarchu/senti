@@ -2,7 +2,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 
-from .db.financial_news_weekly_sentiment import get_stock_news_weekly_sentiment
+from .db.financial_news_weekly_sentiment import get_stock_news_sentiment_weekly
 from .db.nyt_sentiment import get_nyt_date_point_list
 from .db.nyt_articles import most_negative_articles
 from .db.financial_news_sentiment import get_stock_news_date_point_list
@@ -35,12 +35,17 @@ class FinancialNewsSentimentMonthly(APIView):
 
 
 class FinancialNewsSentimentWeekly(APIView):
-    """/api/financial-news-sentiment/stocks/{ticker}"""
+    """/api/financial-news-weekly-sentiment/stocks/{ticker}?period=x"""
     def get(self, request, *args, **kwargs):
         if not kwargs.get('ticker'):
             return Response({}, status=status.HTTP_204_NO_CONTENT)
-        queryset = get_stock_news_weekly_sentiment(
-            kwargs.get('ticker')
+        # months
+        period = 12
+        if request.GET.get('period'):
+            period = int(request.GET.get('period'))
+        queryset = get_stock_news_sentiment_weekly(
+            kwargs.get('ticker'),
+            period
         )
         serializer = DatePointSerializer(queryset, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
