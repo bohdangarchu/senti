@@ -3,9 +3,6 @@ import { Container } from "@mui/system";
 import React from "react";
 import BubbleChart from "../components/Charts/BubbleChart";
 import bgimage from "../../assets/bgimage.png";
-import bg2 from "../../assets/bg2.png";
-import gradient from "../../assets/gradient.jpg";
-import grad from "../../assets/grad.jpg";
 export default function Landing() {
   return (
     <Box

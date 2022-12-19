@@ -12,8 +12,6 @@ function Financials() {
     setFetchData([stockTicker, period]);
   }
 
-  console.log(fetchData);
-
   useEffect(() => {
     if (initialRender) {
       setInitialRender(false);

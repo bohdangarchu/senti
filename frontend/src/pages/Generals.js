@@ -1,4 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { receivedGeneralSenti } from "./generalSlice";
 import { Container, Grid, Typography, Box } from "@mui/material/";
 import Article from "../components/Article";
 import CircularProgress from "@mui/material/CircularProgress";
@@ -9,12 +11,17 @@ import { SingleLineChart } from "../components/Charts/SingleLineChart";
 
 export default function Generals() {
   const [fetchData, setFetchData] = useState([]);
-  const [sentiData, setSentiData] = useState({});
   const [detailsOnDate, setDetailsOnDate] = useState([]);
   const [sentiDataDetails, setSentiDataDetails] = useState([]);
   const [initialRender, setInitialRender] = useState(true);
+  const [isLoaded, setIsLoaded] = useState(false);
   const { get, loading } = useFetch(`/api`);
   const chartRef = useRef();
+
+  const dispatch = useDispatch();
+
+  const generalSentiData = useSelector((state) => state.generals);
+  console.log(generalSentiData);
 
   function handleGenerateClick(fromDate, toDate, word) {
     setFetchData([fromDate, toDate, word]);
@@ -23,7 +30,7 @@ export default function Generals() {
   const handlePointDate = (event) => {
     const point = getElementAtEvent(chartRef.current, event);
     const pointIndex = point[0].index;
-    const pointDate = sentiData.labels[pointIndex];
+    const pointDate = generalSentiData.labels[pointIndex];
     const yearAndMonth = pointDate.split("-");
     const sentiWord = fetchData[2];
     setDetailsOnDate([yearAndMonth[0], yearAndMonth[1], sentiWord]);
@@ -31,23 +38,16 @@ export default function Generals() {
 
   useEffect(() => {
     setSentiDataDetails({});
-    setSentiData({});
     if (initialRender) {
       setInitialRender(false);
     } else {
       get(
         `/nyt-news-sentiment?keyword=${fetchData[2]}&start-date=${fetchData[0]}&end-date=${fetchData[1]}`
-      ).then((json) => {
-        setSentiData({
-          labels: json.map((uniqYear) => uniqYear.date),
-          datasets: [
-            {
-              label: "click on the point to see details",
-              data: json.map((uniqYear) => uniqYear.sentiment),
-            },
-          ],
-        });
-      });
+      )
+        .then((json) => {
+          dispatch(receivedGeneralSenti(json));
+        })
+        .then(() => setIsLoaded(true));
     }
   }, [fetchData]);
 
@@ -68,14 +68,13 @@ export default function Generals() {
           <RangeDatePicker onRangeSelect={handleGenerateClick} />
         </Grid>
         <Grid item xs={12}>
-          {Object.keys(sentiData).length === 0 &&
-          sentiData.constructor === Object ? (
+          {isLoaded === false ? (
             <Typography variant="h4" align="center" gutterBottom>
               Choose dates and word you are looking for!
             </Typography>
           ) : (
             <SingleLineChart
-              data={sentiData}
+              data={generalSentiData}
               onPointClick={handlePointDate}
               ref={chartRef}
             />

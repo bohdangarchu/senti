@@ -31,12 +31,14 @@
     "@mui/icons-material": "^5.10.16",
     "@mui/material": "^5.10.9",
     "@mui/x-date-pickers": "^5.0.4",
+    "@reduxjs/toolkit": "^1.9.1",
     "chart.js": "^3.9.1",
     "chartjs-adapter-date-fns": "^2.0.0",
     "date-fns": "^2.29.3",
     "dayjs": "^1.11.5",
     "file-loader": "^6.2.0",
     "react-chartjs-2": "^4.3.1",
+    "react-redux": "^8.0.5",
     "react-router-dom": "^6.4.0"
   }
 }
