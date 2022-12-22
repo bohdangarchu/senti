@@ -1,6 +1,9 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { receivedGeneralSenti } from "./generalSlice";
+import {
+  receivedGeneralSenti,
+  receivedGeneralSentiDetails,
+} from "./generalSlice";
 import { Container, Grid, Typography, Box } from "@mui/material/";
 import Article from "../components/Article";
 import CircularProgress from "@mui/material/CircularProgress";
@@ -12,7 +15,6 @@ import { SingleLineChart } from "../components/Charts/SingleLineChart";
 export default function Generals() {
   const [fetchData, setFetchData] = useState([]);
   const [detailsOnDate, setDetailsOnDate] = useState([]);
-  const [sentiDataDetails, setSentiDataDetails] = useState([]);
   const [initialRender, setInitialRender] = useState(true);
   const [isLoaded, setIsLoaded] = useState(false);
   const { get, loading } = useFetch(`/api`);
@@ -20,8 +22,13 @@ export default function Generals() {
 
   const dispatch = useDispatch();
 
-  const generalSentiData = useSelector((state) => state.generals);
+  const generalSentiData = useSelector((state) => state.generals.generalSenti);
+  const generalSentiDetails = useSelector(
+    (state) => state.generals.generalSentiDetails
+  );
+
   console.log(generalSentiData);
+  console.log(generalSentiDetails);
 
   function handleGenerateClick(fromDate, toDate, word) {
     setFetchData([fromDate, toDate, word]);
@@ -37,7 +44,6 @@ export default function Generals() {
   };
 
   useEffect(() => {
-    setSentiDataDetails({});
     if (initialRender) {
       setInitialRender(false);
     } else {
@@ -52,11 +58,13 @@ export default function Generals() {
   }, [fetchData]);
 
   useEffect(() => {
-    if (typeof detailsOnDate[0] == "string") {
+    if (initialRender) {
+      setInitialRender(false);
+    } else {
       get(
         `/most-negative-articles/${detailsOnDate[0]}/${detailsOnDate[1]}?keyword=${detailsOnDate[2]}`
       ).then((json) => {
-        setSentiDataDetails(json);
+        dispatch(receivedGeneralSentiDetails(json));
       });
     }
   }, [detailsOnDate]);
@@ -91,14 +99,14 @@ export default function Generals() {
         </Grid>
         <Grid item xs={12}>
           <Box sx={{ display: "flex", flexDirection: "column" }} mt={2}>
-            {sentiDataDetails.length > 0 && loading == false ? (
+            {generalSentiDetails.length > 0 && loading == false ? (
               <Box>
                 <Typography variant="h5" align="left" gutterBottom>
                   Articles that have the most negative sentiment
                 </Typography>
-                {sentiDataDetails.map((article) => (
+                {generalSentiDetails.map((article) => (
                   <Article
-                    key={sentiDataDetails.indexOf(article)}
+                    key={generalSentiDetails.indexOf(article)}
                     date={article.date}
                     sentiment={article.sentiment}
                     text={article.text}

@@ -2,7 +2,8 @@ import { createSlice } from "@reduxjs/toolkit";
 import { current } from "@reduxjs/toolkit";
 
 const initialState = {
-  generals: {},
+  generalSenti: {},
+  generalSentiDetails: [],
 };
 
 const generalSlice = createSlice({
@@ -11,37 +12,30 @@ const generalSlice = createSlice({
   reducers: {
     receivedGeneralSenti: (state, action) => {
       const sentiData = action.payload;
-      // state.generals.labels = sentiData.map((uniqYear) => uniqYear.date);
-      // state.generals.datasets.data = sentiData.map(
-      //   (uniqYear) => uniqYear.sentiment
-      // );
-      //  let generals = state.generals;
       return {
-        ...state.generals,
-        labels: sentiData.map((uniqYear) => uniqYear.date),
-        datasets: [
-          {
-            label: "click on the point to see details",
-            data: sentiData.map((uniqYear) => uniqYear.sentiment),
-          },
-        ],
+        ...state,
+        generalSenti: {
+          labels: sentiData.map((uniqYear) => uniqYear.date),
+          datasets: [
+            {
+              label: "click on the point to see details",
+              data: sentiData.map((uniqYear) => uniqYear.sentiment),
+            },
+          ],
+        },
       };
-      //  console.log(current(state), current(generals));
-      // return generals;
-      //      state.generals = sentiData;
-      // push({
-      //   labels: sentiData.map((uniqYear) => uniqYear.date),
-      //   datasets: [
-      //     {
-      //       label: "click on the point to see details",
-      //       data: sentiData.map((uniqYear) => uniqYear.sentiment),
-      //     },
-      //   ],
-      // });
+    },
+    receivedGeneralSentiDetails: (state, action) => {
+      const sentiDetails = action.payload;
+      return {
+        ...state,
+        generalSentiDetails: sentiDetails,
+      };
     },
   },
 });
 
-export const { receivedGeneralSenti } = generalSlice.actions;
+export const { receivedGeneralSenti, receivedGeneralSentiDetails } =
+  generalSlice.actions;
 
 export default generalSlice.reducer;
