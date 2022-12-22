@@ -2,6 +2,7 @@ import { useState } from "react";
 
 export default function useFetch(baseUrl) {
   const [loading, setLoading] = useState(false);
+  const [isLoaded, setIsLoaded] = useState(false);
 
   function get(url) {
     setLoading(true);
@@ -18,7 +19,10 @@ export default function useFetch(baseUrl) {
         .catch((error) => {
           reject(error);
         })
-        .finally(() => setLoading(false));
+        .finally(() => {
+          setLoading(false);
+          setIsLoaded(true);
+        });
     });
   }
 
@@ -47,5 +51,5 @@ export default function useFetch(baseUrl) {
     });
   }
 
-  return { get, post, loading };
+  return { get, post, loading, isLoaded };
 }

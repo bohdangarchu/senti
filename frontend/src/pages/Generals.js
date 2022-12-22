@@ -16,8 +16,8 @@ export default function Generals() {
   const [fetchData, setFetchData] = useState([]);
   const [detailsOnDate, setDetailsOnDate] = useState([]);
   const [initialRender, setInitialRender] = useState(true);
-  const [isLoaded, setIsLoaded] = useState(false);
-  const { get, loading } = useFetch(`/api`);
+  //const [isLoaded, setIsLoaded] = useState(false);
+  const { get, loading, isLoaded } = useFetch(`/api`);
   const chartRef = useRef();
 
   const dispatch = useDispatch();
@@ -26,9 +26,6 @@ export default function Generals() {
   const generalSentiDetails = useSelector(
     (state) => state.generals.generalSentiDetails
   );
-
-  console.log(generalSentiData);
-  console.log(generalSentiDetails);
 
   function handleGenerateClick(fromDate, toDate, word) {
     setFetchData([fromDate, toDate, word]);
@@ -61,6 +58,7 @@ export default function Generals() {
     if (initialRender) {
       setInitialRender(false);
     } else {
+      dispatch(receivedGeneralSentiDetails([]));
       get(
         `/most-negative-articles/${detailsOnDate[0]}/${detailsOnDate[1]}?keyword=${detailsOnDate[2]}`
       ).then((json) => {
@@ -99,7 +97,7 @@ export default function Generals() {
         </Grid>
         <Grid item xs={12}>
           <Box sx={{ display: "flex", flexDirection: "column" }} mt={2}>
-            {generalSentiDetails.length > 0 && loading == false ? (
+            {generalSentiDetails.length > 0 ? (
               <Box>
                 <Typography variant="h5" align="left" gutterBottom>
                   Articles that have the most negative sentiment
