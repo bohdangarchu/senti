@@ -16,7 +16,6 @@ export default function Generals() {
   const [fetchData, setFetchData] = useState([]);
   const [detailsOnDate, setDetailsOnDate] = useState([]);
   const [initialRender, setInitialRender] = useState(true);
-  //const [isLoaded, setIsLoaded] = useState(false);
   const { get, loading, isLoaded } = useFetch(`/api`);
   const chartRef = useRef();
 
@@ -27,7 +26,19 @@ export default function Generals() {
     (state) => state.generals.generalSentiDetails
   );
 
+  console.log(generalSentiData);
+
+  function isEmpty(obj) {
+    return Object.keys(obj).length === 0 && obj.constructor === Object;
+  }
+
   function handleGenerateClick(fromDate, toDate, word) {
+    console.log(generalSentiData);
+    console.log(isEmpty(generalSentiData));
+    if (isEmpty(generalSentiData) === false) {
+      dispatch(receivedGeneralSenti([]));
+    }
+    dispatch(receivedGeneralSentiDetails([]));
     setFetchData([fromDate, toDate, word]);
   }
 
@@ -37,6 +48,7 @@ export default function Generals() {
     const pointDate = generalSentiData.labels[pointIndex];
     const yearAndMonth = pointDate.split("-");
     const sentiWord = fetchData[2];
+    dispatch(receivedGeneralSentiDetails([]));
     setDetailsOnDate([yearAndMonth[0], yearAndMonth[1], sentiWord]);
   };
 
@@ -46,11 +58,9 @@ export default function Generals() {
     } else {
       get(
         `/nyt-news-sentiment?keyword=${fetchData[2]}&start-date=${fetchData[0]}&end-date=${fetchData[1]}`
-      )
-        .then((json) => {
-          dispatch(receivedGeneralSenti(json));
-        })
-        .then(() => setIsLoaded(true));
+      ).then((json) => {
+        dispatch(receivedGeneralSenti(json));
+      });
     }
   }, [fetchData]);
 
@@ -58,7 +68,6 @@ export default function Generals() {
     if (initialRender) {
       setInitialRender(false);
     } else {
-      dispatch(receivedGeneralSentiDetails([]));
       get(
         `/most-negative-articles/${detailsOnDate[0]}/${detailsOnDate[1]}?keyword=${detailsOnDate[2]}`
       ).then((json) => {
@@ -74,7 +83,7 @@ export default function Generals() {
           <RangeDatePicker onRangeSelect={handleGenerateClick} />
         </Grid>
         <Grid item xs={12}>
-          {isLoaded === false ? (
+          {isEmpty(generalSentiData) ? (
             <Typography variant="h4" align="center" gutterBottom>
               Choose dates and word you are looking for!
             </Typography>

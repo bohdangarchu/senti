@@ -51,5 +51,5 @@ export default function useFetch(baseUrl) {
     });
   }
 
-  return { get, post, loading, isLoaded };
+  return { get, post, loading, setLoading, isLoaded };
 }
