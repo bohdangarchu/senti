@@ -36,6 +36,7 @@
     "chartjs-adapter-date-fns": "^2.0.0",
     "date-fns": "^2.29.3",
     "dayjs": "^1.11.5",
+    "dotenv": "^16.0.3",
     "file-loader": "^6.2.0",
     "react-chartjs-2": "^4.3.1",
     "react-redux": "^8.0.5",

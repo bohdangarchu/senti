@@ -6,5 +6,6 @@ frontend/static/frontend/
 .idea/
 db.sqlite3
 __pycache__/
+todo
 
 

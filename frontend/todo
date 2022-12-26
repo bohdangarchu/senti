@@ -5,5 +5,7 @@ fix button display on md screens generals
 add landing page
 check difference between single line chart and multi line chart. in case they ==, get rid of several chart
 
-need to fix loading process (reset chart + articles) when user want to fetch new data/new articles +- 
-need to fix loader circle 
+need to fix loading process (reset chart + articles) when user want to fetch new data/new articles +-
+need to fix loader circle
+refacto page structure logic: put description above input, make it more consistent
+landing display on mobile screen

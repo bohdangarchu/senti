@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Container, Grid, Typography, Box } from "@mui/material/";
-import StockPicker from "../components/StockPicker";
-import MultiLineChart from "../components/Charts/MultiLineChart";
-import { fakeData } from "../auxiliary components/fakeData";
+import StockPicker from "../../components/StockPicker";
+import MultiLineChart from "../../components/Charts/MultiLineChart";
+import { fakeData } from "../../auxiliary components/fakeData";
 
 function Financials() {
   const [fetchData, setFetchData] = useState([]);

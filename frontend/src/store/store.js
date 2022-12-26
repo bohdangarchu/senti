@@ -1,6 +1,6 @@
 import { configureStore } from "@reduxjs/toolkit";
-import generalsReducer from "../pages/generalSlice";
-import financialsReducer from "../pages/financialSlice";
+import generalsReducer from "../pages/Generals/generalSlice";
+import financialsReducer from "../pages/Financials/financialSlice";
 export const store = configureStore({
   reducer: {
     generals: generalsReducer,

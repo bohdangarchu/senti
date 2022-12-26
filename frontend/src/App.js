@@ -1,8 +1,8 @@
 import React from "react";
-import General from "./pages/Generals";
-import Financials from "./pages/Financials";
+import General from "./pages/Generals/Generals";
+import Financials from "./pages/Financials/Financials";
 import Navbar from "./components/Navbar";
-import { Box, Container } from "@mui/material/";
+import { Box } from "@mui/material/";
 import { Routes, Route } from "react-router-dom";
 import NotFound from "./pages/NotFound";
 import Landing from "./pages/Landing";

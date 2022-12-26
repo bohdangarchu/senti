@@ -5,36 +5,33 @@ import {
   receivedGeneralSentiDetails,
 } from "./generalSlice";
 import { Container, Grid, Typography, Box } from "@mui/material/";
-import Article from "../components/Article";
+import Article from "../../components/Article";
 import CircularProgress from "@mui/material/CircularProgress";
-import RangeDatePicker from "../components/RangeDatePicker";
-import useFetch from "../hooks/useFetch";
+import RangeDatePicker from "../../components/RangeDatePicker";
+import useFetch from "../../hooks/useFetch";
 import { getElementAtEvent } from "react-chartjs-2";
-import { SingleLineChart } from "../components/Charts/SingleLineChart";
+import { SingleLineChart } from "../../components/Charts/SingleLineChart";
 
 export default function Generals() {
   const [fetchData, setFetchData] = useState([]);
   const [detailsOnDate, setDetailsOnDate] = useState([]);
   const [initialRender, setInitialRender] = useState(true);
-  const { get, loading, isLoaded } = useFetch(`/api`);
+  const { get, loading } = useFetch(`/api`);
   const chartRef = useRef();
 
   const dispatch = useDispatch();
+  console.log(process.env);
 
   const generalSentiData = useSelector((state) => state.generals.generalSenti);
   const generalSentiDetails = useSelector(
     (state) => state.generals.generalSentiDetails
   );
 
-  console.log(generalSentiData);
-
   function isEmpty(obj) {
     return Object.keys(obj).length === 0 && obj.constructor === Object;
   }
 
   function handleGenerateClick(fromDate, toDate, word) {
-    console.log(generalSentiData);
-    console.log(isEmpty(generalSentiData));
     if (isEmpty(generalSentiData) === false) {
       dispatch(receivedGeneralSenti([]));
     }
@@ -83,26 +80,27 @@ export default function Generals() {
           <RangeDatePicker onRangeSelect={handleGenerateClick} />
         </Grid>
         <Grid item xs={12}>
-          {isEmpty(generalSentiData) ? (
-            <Typography variant="h4" align="center" gutterBottom>
-              Choose dates and word you are looking for!
-            </Typography>
+          {loading ? (
+            <Box
+              sx={{ display: "flex" }}
+              direction="row"
+              justifyContent="center"
+              alignItems="center"
+              mt={5}
+            >
+              <CircularProgress size={100} />
+            </Box>
           ) : (
-            <SingleLineChart
-              data={generalSentiData}
-              onPointClick={handlePointDate}
-              ref={chartRef}
-            />
+            <>
+              {isEmpty(generalSentiData) ? null : (
+                <SingleLineChart
+                  data={generalSentiData}
+                  onPointClick={handlePointDate}
+                  ref={chartRef}
+                />
+              )}
+            </>
           )}
-          <Box
-            sx={{ display: "flex" }}
-            direction="row"
-            justifyContent="center"
-            alignItems="center"
-            mt={5}
-          >
-            {loading && <CircularProgress size={100} />}
-          </Box>
         </Grid>
         <Grid item xs={12}>
           <Box sx={{ display: "flex", flexDirection: "column" }} mt={2}>

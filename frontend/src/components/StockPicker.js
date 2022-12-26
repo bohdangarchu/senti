@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Grid, TextField, Button, Autocomplete } from "@mui/material/";
 import Dropdown from "./Dropdown";
-import { tickersList } from "../data/tickers";
+import { tickersList } from "../constans/stockTickers";
 function StockPicker(props) {
   const [stockTicker, setStockTicker] = useState("");
   const [period, setPeriod] = useState("");
