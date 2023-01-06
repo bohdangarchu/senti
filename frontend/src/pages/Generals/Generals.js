@@ -20,11 +20,13 @@ export default function Generals() {
   const chartRef = useRef();
 
   const dispatch = useDispatch();
-  console.log(process.env);
+  console.log(process.env.NODE_ENV);
+  // console.log(process.env.REACT_APP_GENERAL_ENDPOINT);
+  // console.log(process.env.REACT_APP_FINANCIAL_WEEKLY_ENDPOINT);
 
-  const generalSentiData = useSelector((state) => state.generals.generalSenti);
+  const generalSentiData = useSelector((state) => state.general.generalSenti);
   const generalSentiDetails = useSelector(
-    (state) => state.generals.generalSentiDetails
+    (state) => state.general.generalSentiDetails
   );
 
   function isEmpty(obj) {

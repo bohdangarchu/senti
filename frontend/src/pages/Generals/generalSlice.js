@@ -7,7 +7,7 @@ const initialState = {
 };
 
 const generalSlice = createSlice({
-  name: "generals",
+  name: "general",
   initialState,
   reducers: {
     receivedGeneralSenti: (state, action) => {

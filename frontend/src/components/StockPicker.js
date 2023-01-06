@@ -1,7 +1,8 @@
 import React, { useState } from "react";
-import { Grid, TextField, Button, Autocomplete } from "@mui/material/";
+import { Grid, TextField, Button } from "@mui/material/";
 import Dropdown from "./Dropdown";
 import { tickersList } from "../constans/stockTickers";
+import TickerAutocomplete from "./TickerAutocomplete";
 function StockPicker(props) {
   const [stockTicker, setStockTicker] = useState("");
   const [period, setPeriod] = useState("");
@@ -29,23 +30,9 @@ function StockPicker(props) {
       justifyContent="center"
     >
       <Grid item xs={12} sm={6}>
-        <Autocomplete
-          freeSolo
-          fullWidth
-          id="free-solo-2-demo"
-          disableClearable
-          options={tickersList.map((option) => option.company_name)}
-          onChange={(event, value) => getStockTicker(value)}
-          renderInput={(params) => (
-            <TextField
-              {...params}
-              label="Find Company"
-              InputProps={{
-                ...params.InputProps,
-                type: "search",
-              }}
-            />
-          )}
+        <TickerAutocomplete
+          tickersList={tickersList}
+          onTickerSelect={getStockTicker}
         />
       </Grid>
       <Grid item xs={12} sm={3}>

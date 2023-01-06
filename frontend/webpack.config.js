@@ -35,6 +35,10 @@ module.exports = {
       "process.env": {
         // This has effect on the react lib size
         NODE_ENV: JSON.stringify("development"),
+        // REACT_APP_GENERAL_ENDPOINT: JSON.stringify("/api/nyt-news-sentiment"),
+        // REACT_APP_FINANCIAL_WEEKLY_ENDPOINT: JSON.stringify(
+        //   "/api/financial-news-weekly-sentiment/stocks/"
+        // ),
       },
     }),
   ],

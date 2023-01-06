@@ -3,7 +3,7 @@ import generalsReducer from "../pages/Generals/generalSlice";
 import financialsReducer from "../pages/Financials/financialSlice";
 export const store = configureStore({
   reducer: {
-    generals: generalsReducer,
-    financials: financialsReducer,
+    general: generalsReducer,
+    financial: financialsReducer,
   },
 });
