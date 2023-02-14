@@ -3,38 +3,33 @@ import { useSelector, useDispatch } from "react-redux";
 import {
   receivedGeneralSenti,
   receivedGeneralSentiDetails,
-} from "./generalSlice";
+} from "../redux/slices/generalSlice";
 import { Container, Grid, Typography, Box } from "@mui/material/";
-import Article from "../../components/Article";
+import Article from "../components/Article";
 import CircularProgress from "@mui/material/CircularProgress";
-import RangeDatePicker from "../../components/RangeDatePicker";
-import useFetch from "../../hooks/useFetch";
+import RangeDatePicker from "../components/RangeDatePicker";
+import useFetch from "../hooks/useFetch";
 import { getElementAtEvent } from "react-chartjs-2";
-import { SingleLineChart } from "../../components/Charts/SingleLineChart";
+import { SingleLineChart } from "../components/Charts/SingleLineChart";
+import useHelpers from "../hooks/useHelpers";
 
 export default function Generals() {
   const [fetchData, setFetchData] = useState([]);
   const [detailsOnDate, setDetailsOnDate] = useState([]);
   const [initialRender, setInitialRender] = useState(true);
   const { get, loading } = useFetch(`/api`);
+  const { isObjectEmpty } = useHelpers();
   const chartRef = useRef();
 
   const dispatch = useDispatch();
-  console.log(process.env.NODE_ENV);
-  // console.log(process.env.REACT_APP_GENERAL_ENDPOINT);
-  // console.log(process.env.REACT_APP_FINANCIAL_WEEKLY_ENDPOINT);
 
   const generalSentiData = useSelector((state) => state.general.generalSenti);
   const generalSentiDetails = useSelector(
     (state) => state.general.generalSentiDetails
   );
 
-  function isEmpty(obj) {
-    return Object.keys(obj).length === 0 && obj.constructor === Object;
-  }
-
   function handleGenerateClick(fromDate, toDate, word) {
-    if (isEmpty(generalSentiData) === false) {
+    if (isObjectEmpty(generalSentiData) === false) {
       dispatch(receivedGeneralSenti([]));
     }
     dispatch(receivedGeneralSentiDetails([]));
@@ -94,7 +89,7 @@ export default function Generals() {
             </Box>
           ) : (
             <>
-              {isEmpty(generalSentiData) ? null : (
+              {isObjectEmpty(generalSentiData) ? null : (
                 <SingleLineChart
                   data={generalSentiData}
                   onPointClick={handlePointDate}

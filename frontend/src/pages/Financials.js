@@ -1,27 +1,26 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { receivedFinSenti, receivedStockPrice } from "./financialSlice";
+import {
+  receivedFinSenti,
+  receivedStockPrice,
+} from "../redux/slices/financialSlice";
 import { Container, Grid, Typography, Box } from "@mui/material/";
-import StockPicker from "../../components/StockPicker";
-import { SingleLineChart } from "../../components/Charts/SingleLineChart";
-import { fakeData } from "../../auxiliary components/fakeData";
-import { finSentiUrl, stocksUrl } from "../../constans/urls";
-import useMultipleFetch from "../../hooks/useMultipleFetch";
+import StockPicker from "../components/StockPicker";
+import { SingleLineChart } from "../components/Charts/SingleLineChart";
+import { finSentiUrl, stocksUrl } from "../constans/urls";
+import useMultipleFetch from "../hooks/useMultipleFetch";
+import useHelpers from "../hooks/useHelpers";
+import MultiLineChart from "../components/Charts/MultiLineChart";
 
 function Financials() {
   const [fetchData, setFetchData] = useState([]);
   const [ticker, period] = fetchData;
   const [initialRender, setInitialRender] = useState(true);
+  const { isObjectEmpty } = useHelpers();
   const { getData, loading } = useMultipleFetch(finSentiUrl, stocksUrl);
   const finSentiData = useSelector((state) => state.financial.financialSenti);
   const stockData = useSelector((state) => state.financial.stockPrice);
   const dispatch = useDispatch();
-
-  // console.log(finSentiData);
-  // console.log(stockData);
-  function isEmpty(obj) {
-    return Object.keys(obj).length === 0 && obj.constructor === Object;
-  }
 
   function handleSearchClick(stockTicker, period) {
     setFetchData([stockTicker, period]);
@@ -58,7 +57,7 @@ function Financials() {
           <StockPicker onSearchClick={handleSearchClick} />
         </Grid>
         <Grid item xs={12}>
-          {isEmpty(finSentiData) ? null : (
+          {isObjectEmpty(finSentiData) ? null : (
             <Grid container spacing={2}>
               <Grid item xs={12} md={6}>
                 <SingleLineChart data={finSentiData} />

@@ -1,6 +1,6 @@
 import React from "react";
-import General from "./pages/Generals/Generals";
-import Financials from "./pages/Financials/Financials";
+import General from "./pages/Generals";
+import Financials from "./pages/Financials";
 import Navbar from "./components/Navbar";
 import { Box } from "@mui/material/";
 import { Routes, Route } from "react-router-dom";
@@ -8,6 +8,7 @@ import NotFound from "./pages/NotFound";
 import Landing from "./pages/Landing";
 
 export default function App() {
+  console.log(process.env.REACT_APP_FINANCIAL_WEEKLY_ENDPOINT);
   return (
     <Box
       sx={{
