@@ -1,3 +1,12 @@
+# Overview
+
+Senti is a machine learning-based sentiment analysis tool designed to 
+ classify sentiment in news for a given topic or company.
+Users can enter a specific company and see how they performed in the news and 
+compare it to the stock price graph in the same period.
+
+Senti is built with `Django` and `React.js`.
+The project uses Python `NLTK` library for sentiment analysis.
 # Setup
 
 1. clone the project
